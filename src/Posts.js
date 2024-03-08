@@ -1,11 +1,33 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, FlatList, TouchableOpacity, Button } from 'react-native';
 import usePosts from './usePosts';
 import { Text } from './Text';
 import colors from './constants';
+import { storage } from './Services/Storage';
 
 export const Posts = ({ navigation }) => {
     const { data, isLoading, isSuccess } = usePosts();
+
+    const onSaveData = () => {
+        const user = {
+            name: "ascas",
+            location: "localdd",
+            email: 'abcd123@gmail.com',
+        }
+        storage.set('username', JSON.stringify(user))
+        storage.set('isBool', false)
+        storage.set('contact', 123456789)
+    }
+
+    const onGetData = () => {
+        const data = storage.getString('username')
+        const final = JSON.parse(data)
+        console.log(
+            final, '<==',
+            storage.getBoolean('isBool'),
+            storage.getNumber('contact')
+        );
+    }
 
     return (
         <View style={styles.container}>
@@ -18,19 +40,21 @@ export const Posts = ({ navigation }) => {
             {isSuccess && (
                 <React.Fragment>
                     <Text style={styles.header}>all posts by UTA Expo</Text>
+                    <Button title='Save Data' onPress={onSaveData} />
+                    <Button title='Get Data' onPress={onGetData} />
                     <FlatList
                         data={data}
                         style={styles.wrapper}
                         keyExtractor={(item) => `${item.id}`}
                         renderItem={({ item }) => (
                             <TouchableOpacity
-                                onPress={() => 
-                                  navigation.push('Post', { post: item })}
+                                onPress={() =>
+                                    navigation.push('Post', { post: item })}
                                 style={styles.post}
                             >
                                 <View style={styles.item}>
                                     <Text style={styles.postTitle}>
-                                      {item.title}
+                                        {item.title}
                                     </Text>
                                 </View>
                             </TouchableOpacity>
