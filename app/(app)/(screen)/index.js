@@ -1,10 +1,10 @@
 import { Link, router, useRouter } from 'expo-router';
 import React from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Button } from 'react-native';
 import { ChannelList } from 'stream-chat-expo';
-import { chatUserId } from '../../../src/Services/chatConfig';
+import { chatApiKey, chatSecretKey, chatUserId } from '../../../src/Services/chatConfig';
 import { useAuth } from '../../../context/auth';
-
+import { StreamChat } from 'stream-chat';
 const filters = {
     members: {
         '$in': [chatUserId]
@@ -19,15 +19,33 @@ const Index = () => {
     const { setChannel } = useAuth()
     const router = useRouter()
 
+    const btn = async () => {
+        const chatClient = StreamChat.getInstance(chatApiKey, chatSecretKey);
+        const channel = chatClient.channel('messaging', 'Funnmore', {
+            name: 'Fun N More',
+        });
+        // Here, 'travel' will be the channel ID
+        // await channel.create();
+        console.log(channel.state);
+        await channel.sendMessage({
+            text: "my message",
+            pinned: true,
+            pin_expires: "2077-01-01T00:00:00Z",
+          });
+    }
+
     return (
-        <ChannelList
-            filters={filters}
-            sort={sort}
-            onSelect={(channel) => {
-                setChannel(channel)
-                router.push('./ChannelScreen')
-            }}
-        />
+        <>
+            <ChannelList
+                filters={filters}
+                sort={sort}
+                onSelect={(channel) => {
+                    setChannel(channel)
+                    router.push('./ChannelScreen')
+                }}
+            />
+            <Button onPress={btn} title='hello' />
+        </>
     );
 }
 
