@@ -1,6 +1,8 @@
-{
+const IS_DEV = process.env.APP_VARIANT === 'development';
+
+export default {
   "expo": {
-    "name": "expo-demo",
+    "name": IS_DEV ? "Expo Dev" : "Expo Release",
     "slug": "expo-demo",
     "scheme": "your-app-scheme",
     "version": "1.0.0",
@@ -24,7 +26,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.parth.simform.expodemo"
+      // "package": "com.parth.simform.expodemo"
     },
     "web": {
       "favicon": "./assets/favicon.png"
