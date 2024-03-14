@@ -26,7 +26,7 @@ export default {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      // "package": "com.parth.simform.expodemo"
+      "package": "com.parth.simform.expodemo"
     },
     "web": {
       "favicon": "./assets/favicon.png"
