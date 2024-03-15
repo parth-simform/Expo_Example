@@ -20,7 +20,7 @@ export default {
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.parth.simform.expodemo",
-      "buildNumber": 1,
+      "buildNumber": '1',
     },
     "android": {
       "adaptiveIcon": {
