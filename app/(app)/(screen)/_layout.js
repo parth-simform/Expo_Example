@@ -17,7 +17,7 @@ const ScreenLayout = () => {
 
     return (
         <OverlayProvider>
-            <Chat client={chatClient}>
+            <Chat client={chatClient} enableOfflineSupport>
                 <Stack>
                     <Stack.Screen name={'index'} options={{ title: 'Home' }} />
                     <Stack.Screen name={'ChannelScreen'} options={{ title: 'Users' }} />

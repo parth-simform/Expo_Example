@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, Button } from 'react-native'
+import { View, Text, SafeAreaView, Button, Platform } from 'react-native'
 import React from 'react'
 import { useAuth } from '../../context/auth'
 import CryptoJS from 'crypto-js';
@@ -20,20 +20,20 @@ const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, secretKey);
 const decryptedData = decryptedBytes.toString(CryptoJS.enc.Utf8);
 
 // console.log('Decrypted Data:', decryptedData);
-
+const isAndroid = Platform.OS === 'android'
 const Login = () => {
   const { signIn } = useAuth()
   const client = new QueryClient()
   
   return (
     <QueryClientProvider client={client}>
-    <SafeAreaView>
-      <Text>Login screen </Text>
-      <Button
-        title='Sign In'
-        onPress={signIn}
-      />
-    </SafeAreaView>
+      <SafeAreaView style={{ marginTop: isAndroid ? 40 : 0 }}>
+        <Text>Login screen </Text>
+        <Button
+          title='Sign In'
+          onPress={signIn}
+        />
+      </SafeAreaView>
     </QueryClientProvider>
   )
 }
