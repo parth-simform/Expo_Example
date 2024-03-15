@@ -1,13 +1,14 @@
 import { Link, router, useRouter } from 'expo-router';
 import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Button } from 'react-native';
-import { ChannelList } from 'stream-chat-expo';
+import { ChannelList, useChatContext } from 'stream-chat-expo';
 import { chatApiKey, chatSecretKey, chatUserId } from '../../../src/Services/chatConfig';
 import { useAuth } from '../../../context/auth';
 import { StreamChat } from 'stream-chat';
+import PreviewList from '../../../component/PreviewList';
 const filters = {
     members: {
-        '$in': [chatUserId]
+        '$in': [chatUserId],
     },
 };
 
@@ -16,7 +17,8 @@ const sort = {
 };
 
 const Index = () => {
-    const { setChannel } = useAuth()
+    const { setChannel, channel } = useAuth()
+    const { client, isOnline } = useChatContext();
     const router = useRouter()
 
     const btn = async () => {
@@ -41,7 +43,12 @@ const Index = () => {
                 sort={sort}
                 onSelect={(channel) => {
                     setChannel(channel)
+                    console.log(channel);
                     router.push('./ChannelScreen')
+                }}
+                Preview={(item)=>{
+                    // console.log(item, '<==');
+                    return <PreviewList {...{item}}/>
                 }}
             />
             <Button onPress={btn} title='hello' />
