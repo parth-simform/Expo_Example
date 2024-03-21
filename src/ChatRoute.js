@@ -13,8 +13,11 @@ import { AppProvider } from './Services/AppContext';
 import ChannelListScreen from './ChatScreen/ChannelListScreen';
 import ChannelScreen from './ChatScreen/ChannelScreen';
 import ThreadScreen from './ChatScreen/ThreadScreen';
+import { Posts } from './Posts';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 const Stack = createStackNavigator();
+const QClient = new QueryClient()
 
 const NavigationStack = () => {
     const { clientIsReady } = useChatClient();
@@ -23,17 +26,18 @@ const NavigationStack = () => {
     if (!clientIsReady) {
         return <Text>Loading chat ...</Text>
     }
-
     return (
         <OverlayProvider>
+                <QueryClientProvider client={QClient}>
             <Chat client={chatClient}>
-            <Stack.Navigator>
-                <Stack.Screen name="ChannelList" component={ChannelListScreen} />
-                <Stack.Screen name="ChannelScreen" component={ChannelScreen} />
-                <Stack.Screen name="ThreadScreen" component={ThreadScreen} />
-            </Stack.Navigator>
+                    <Stack.Navigator>
+                        <Stack.Screen name="ChannelList" component={Posts} />
+                        <Stack.Screen name="ChannelScreen" component={ChannelScreen} />
+                        <Stack.Screen name="ThreadScreen" component={ThreadScreen} />
+                    </Stack.Navigator>
             </Chat>
-        </OverlayProvider>
+        </QueryClientProvider>
+        </OverlayProvider >
     );
 };
 
@@ -43,8 +47,8 @@ const ChatRout = () => {
             <GestureHandlerRootView style={{ flex: 1 }}>
                 <SafeAreaView style={{ flex: 1 }}>
                     <NavigationContainer>
-                    <NavigationStack />
-                </NavigationContainer>
+                        <NavigationStack />
+                    </NavigationContainer>
                 </SafeAreaView>
             </GestureHandlerRootView>
         </AppProvider>

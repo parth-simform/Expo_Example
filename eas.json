@@ -11,7 +11,7 @@
         "APP_VARIANT": "development"
       },
       "android": {
-        "gradleCommand": ":app:assembleDevelopmentDebug"
+        "gradleCommand": ":app:assembleDevelopmentRelease"
       },
       "ios": {
         "buildConfiguration": "Debug",

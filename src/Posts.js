@@ -7,6 +7,7 @@ import { storage } from './Services/Storage';
 
 export const Posts = ({ navigation }) => {
     const { data, isLoading, isSuccess } = usePosts();
+    const dataArr = data?.pages?.flat()
 
     const onSaveData = () => {
         const user = {
@@ -43,7 +44,7 @@ export const Posts = ({ navigation }) => {
                     <Button title='Save Data' onPress={onSaveData} />
                     <Button title='Get Data' onPress={onGetData} />
                     <FlatList
-                        data={data}
+                        data={dataArr}
                         style={styles.wrapper}
                         keyExtractor={(item) => `${item.id}`}
                         renderItem={({ item }) => (
